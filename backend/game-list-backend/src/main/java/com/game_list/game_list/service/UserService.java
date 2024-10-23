@@ -16,18 +16,19 @@ public class UserService {
 	private UserRepository userRepository;
 
 	public List<User> getAllUsers(){
-		return null;
+		return this.userRepository.findAll();
 	}
 	
 	public User getOneUser(String email) {
-	    return null;
+		Optional<User> usuario = this.userRepository.findByEmail(email);
+	    return usuario.orElse(null);
 	}
 	
 	public void addUser(User user) {
-
+		this.userRepository.save(user);
 	}
 	
-	public void deleteUser(User user) {
-		
+	public void deleteUser(Long id) {
+		this.userRepository.deleteById(id);
 	}
 }
