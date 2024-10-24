@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.game_list.game_list.entities.User;
@@ -14,6 +15,8 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	public List<User> getAllUsers(){
 		return this.userRepository.findAll();
@@ -25,6 +28,8 @@ public class UserService {
 	}
 	
 	public void addUser(User user) {
+		String hashedPassword = passwordEncoder.encode(user.getPassword());
+		user.setPassword(hashedPassword);
 		this.userRepository.save(user);
 	}
 	

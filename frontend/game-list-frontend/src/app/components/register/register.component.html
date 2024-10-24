@@ -1,0 +1,24 @@
+<h1>Registrate</h1>
+<form [formGroup]="formRegister" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <label for="name">Nombre:</label>
+      <input id="name" formControlName="name">
+    </div>
+
+    <div class="form-row">
+      <label for="email">Email:</label>
+      <input id="email" formControlName="email">
+    </div>
+
+    <div class="form-row">
+        <label for="password">Contraseña:</label>
+        <input id="password" formControlName="password">
+    </div>
+
+    <div class="form-row">
+      <button type="submit" [disabled]="formRegister.invalid">Registrar</button>
+    </div>
+</form>
+<div class="menu">
+  <a routerLink="/" >Volver al menu</a>
+</div>  
