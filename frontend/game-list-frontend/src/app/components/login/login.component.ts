@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { UserGlobalService } from '../../services/user-global.service';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,8 @@ export class LoginComponent implements OnInit, OnDestroy{
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private userGlobal: UserGlobalService
   ){}
 
   ngOnInit(): void {
@@ -42,7 +44,17 @@ export class LoginComponent implements OnInit, OnDestroy{
 
   onSubmit(): void {
     if(this.formLogin.valid){
-      this.router.navigate(['/login-menu']);
+      const {email, password} = this.formLogin.value;
+      this.authService.auth(email, password).pipe(takeUntil(this.unsubscribe$)).subscribe(
+        (response) =>{
+          console.log('Usuario guardado correctamente');
+          this.router.navigate(['/login-menu']);
+          const { token, name, email } = response;
+          this.userGlobal.login(name, email, token);
+        },
+        (error) =>{
+          console.log('Error al guardar el usuario', error);
+        });
     }else {
       console.log('Formulario no válido'); 
     }
