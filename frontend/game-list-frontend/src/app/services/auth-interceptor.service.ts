@@ -10,7 +10,7 @@ export class AuthInterceptorService implements HttpInterceptor {
   constructor() { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('jwt'); // Obtener el token del localStorage
+    const token = localStorage.getItem('token'); // Obtener el token del localStorage
 
     if (token) {
       // Si hay un token, clonar la solicitud y agregar el encabezado Authorization

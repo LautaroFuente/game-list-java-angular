@@ -1,1 +1,24 @@
-<p>add-game works!</p>
+<h1>Agrega el juego</h1>
+<form [formGroup]="formGame" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <label for="name">Nombre:</label>
+      <input id="name" formControlName="name">
+    </div>
+
+    <div class="form-row">
+      <label for="genre">Genero:</label>
+      <input id="genre" formControlName="genre">
+    </div>
+
+    <div class="form-row">
+        <label for="releaseYear">Año de salida:</label>
+        <input id="releaseYear" formControlName="releaseYear">
+    </div>
+
+    <div class="form-row">
+      <button type="submit" [disabled]="formGame.invalid">Agregar</button>
+    </div>
+</form>
+<div class="menu">
+  <a routerLink="/login-menu" >Atras</a>
+</div>  

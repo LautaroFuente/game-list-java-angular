@@ -1,4 +1,5 @@
-import { app, BrowserWindow } from "electron";
+const { app, BrowserWindow } = require('electron');
+
 
 const sizes = [
     { width: 800, height: 600 },
@@ -15,11 +16,29 @@ function createWindow(sizeIndex) {
         height: height,
         webPreferences: {
             nodeIntegration: true,
+            //contextIsolation: false
         }
     });
 
-    win.loadURL('http://localhost:4200'); 
+    win.loadURL('http://localhost:4200');
+
+    win.on('closed', () => {
+        win = null;
+    });
 }
 
-app.whenReady().then(() => createWindow(0));
+app.whenReady().then(() => {
+    createWindow(0);
 
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) {
+            createWindow(0);
+        }
+    });
+});
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
