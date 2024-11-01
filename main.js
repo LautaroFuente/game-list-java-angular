@@ -1,5 +1,8 @@
 const { app, BrowserWindow } = require('electron');
+const Store = require('electron-store');
+const { ipcMain } = require('electron');
 
+const store = new Store();
 
 const sizes = [
     { width: 800, height: 600 },
@@ -41,4 +44,13 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
+});
+
+ipcMain.on('get-data', (event, key) => {
+    const value = store.get(key);
+    event.reply('send-data', value);
+});
+
+ipcMain.on('set-data', (event, key, value) => {
+    store.set(key, value);
 });

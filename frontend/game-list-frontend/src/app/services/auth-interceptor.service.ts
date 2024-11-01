@@ -1,26 +1,49 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ipcRenderer } from 'electron';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthInterceptorService implements HttpInterceptor {
     
+  private token: string | null = null; 
+
   constructor() { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('token'); // Obtener el token del localStorage
 
-    if (token) {
-      // Si hay un token, clonar la solicitud y agregar el encabezado Authorization
+    if (this.token) {
       const cloned = req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${token}`)
+        headers: req.headers.set('Authorization', `Bearer ${this.token}`)
       });
-      return next.handle(cloned); // Continuar con la solicitud clonada
+      return next.handle(cloned);
     }
 
-    return next.handle(req); // Si no hay token, continuar con la solicitud original
+    return new Observable(observer => {
+      ipcRenderer.send('get-data', 'token');
+
+      ipcRenderer.once('send-data', (event, token) => {
+        this.token = token;
+        const cloned = req.clone({
+          headers: req.headers.set('Authorization', `Bearer ${this.token}`)
+        });
+
+        next.handle(cloned).subscribe(
+          (event) => {
+            observer.next(event); // Emitir el evento HTTP
+          },
+          (err) => {
+            observer.error(err); // Emitir el error, si ocurre
+          },
+          () => {
+            observer.complete(); // Completar el observable
+          }
+        );
+      });
+    });
   }
 }
+
 
