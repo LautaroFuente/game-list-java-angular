@@ -24,6 +24,11 @@ export class LoginMenuComponent implements OnInit{
     return this.name;
   }
 
+  onDeleteAccount(): void {
+    //llamar al user-global service para eliminar la cuenta
+    this.router.navigate(['/']);
+  }
+
   logout(): void {
     this.userGlobal.logout();
     this.router.navigate(['/']);

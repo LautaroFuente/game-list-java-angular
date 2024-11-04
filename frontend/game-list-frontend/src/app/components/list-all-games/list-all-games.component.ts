@@ -20,9 +20,9 @@ export class ListAllGamesComponent {
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
-    this.gameService.getGamesFromUser().pipe(takeUntil(this.unsubscribe$)).subscribe(
+    this.gameService.getAllGames().pipe(takeUntil(this.unsubscribe$)).subscribe(
       (response) => {
-        console.log('Informacion obtenida', response);
+        console.log(response.message);
         this.games = response.data;
       },
       (error) => console.log(`Error`, error)

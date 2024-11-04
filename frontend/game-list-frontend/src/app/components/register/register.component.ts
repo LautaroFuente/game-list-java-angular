@@ -11,6 +11,8 @@ import { RouterModule } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { RegisterService } from '../../services/register.service';
+import { ApiResponseDTO } from '../../interfaces/ApiResponseDTO.interface';
+import { User } from '../../interfaces/User.interface';
 
 @Component({
   selector: 'app-register',
@@ -47,7 +49,8 @@ export class RegisterComponent implements OnInit, OnDestroy{
       const {name, email, password} = this.formRegister.value;
       this.registerService.saveUser(name, email, password).pipe(takeUntil(this.unsubscribe$)).subscribe(
         (response) =>{
-          console.log('Usuario guardado correctamente');
+          const ApiResponse: ApiResponseDTO<User> = response;
+          console.log(ApiResponse.success, ApiResponse.message);
           this.router.navigate(['/login']);
         },
         (error) =>{

@@ -10,6 +10,9 @@ import { RouterModule } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { GameService } from '../../services/game.service';
+import { ApiResponseDTO } from '../../interfaces/ApiResponseDTO.interface';
+import { Game } from '../../interfaces/Game.interface';
+import { UserGlobalService } from '../../services/user-global.service';
 
 @Component({
   selector: 'app-add-game',
@@ -27,7 +30,7 @@ export class AddGameComponent implements OnInit, OnDestroy{
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder, private gameService: GameService) {}
+  constructor(private fb: FormBuilder, private gameService: GameService, private userGlobal: UserGlobalService) {}
 
   ngOnInit(): void {
     this.formGame = this.fb.group({
@@ -40,9 +43,11 @@ export class AddGameComponent implements OnInit, OnDestroy{
   onSubmit(): void {
     if(this.formGame.valid){
       const {name, genre, realeaseYear} = this.formGame.value;
-      this.gameService.saveGame(name, genre, realeaseYear).pipe(takeUntil(this.unsubscribe$)).subscribe(
+      const email = this.userGlobal.getEmail();
+      this.gameService.saveGame(name, genre, realeaseYear, email).pipe(takeUntil(this.unsubscribe$)).subscribe(
         (response) =>{
-          console.log('juego guardado correctamente');
+          const apiResponse: ApiResponseDTO<Game> = response;
+          console.log(apiResponse.data, apiResponse.message);
         },
         (error) =>{
           console.log('Error al guardar el juego', error);

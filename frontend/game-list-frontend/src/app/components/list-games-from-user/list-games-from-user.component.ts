@@ -22,11 +22,21 @@ export class ListGamesFromUserComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.gameService.getGamesFromUser().pipe(takeUntil(this.unsubscribe$)).subscribe(
       (response) => {
-        console.log('Informacion obtenida', response);
+        console.log(response.message);
         this.games = response.data;
       },
       (error) => console.log(`Error`, error)
     );
+  }
+
+  onDeleteGame(id: number): void {
+    this.gameService.deleteGame(id).pipe(takeUntil(this.unsubscribe$)).subscribe(
+      (response) => {
+        console.log(response.message);
+      }, 
+      (error) => {
+        console.log(`Error`, error);
+      })
   }
 
   ngOnDestroy(): void {

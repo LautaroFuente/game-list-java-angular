@@ -1,0 +1,71 @@
+h1 {
+    color: #FF6F00;
+    text-align: center;
+}
+
+form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #FF6F00;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+}
+
+.form-row {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #000000;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #FF6F00;
+    color: #FFFFFF;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+button[disabled] {
+    background-color: #CCCCCC;
+    cursor: not-allowed;
+}
+
+button:hover:not([disabled]) {
+    background-color: #000000;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #FFFFFF;
+    background-color: #FF6F00;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    transition: background-color 0.3s;
+}
+
+.menu a:hover {
+    background-color: #000000;
+}

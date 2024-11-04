@@ -1,5 +1,6 @@
 package com.game_list.game_list.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,7 @@ public class UserController {
 		try {
 			User existUser = this.userService.getOneUser(user.getEmail());
 			if( existUser == null) {
+				user.setRegistration_date(LocalDateTime.now());
 				this.userService.addUser(user);
 				return ResponseEntity.ok(new ApiResponseDTO<>(true, "Usuario guardado exitosamente", user));	
 			}else {
@@ -77,13 +79,14 @@ public class UserController {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
-	@DeleteMapping("user/delete/{id}")
-	public ResponseEntity<ApiResponseDTO<List<User>>> deleteUser(@PathVariable Long id){
-		if(id == null || id < 0) {
-			return ResponseEntity.badRequest().body(new ApiResponseDTO<>(false, "El identificador del usuario no puede ser nulo o menor a cero", null));
+	@DeleteMapping("user/delete/{email}")
+	public ResponseEntity<ApiResponseDTO<List<User>>> deleteUser(@PathVariable String email){
+		if(email == null || email == "") {
+			return ResponseEntity.badRequest().body(new ApiResponseDTO<>(false, "El email del usuario no puede ser nulo o vacio", null));
 		}
 		
 		try {
+			Long id = this.userService.getOneUser(email).getId();
 	        this.userService.deleteUser(id);
 	        return ResponseEntity.ok(new ApiResponseDTO<>(true, "Usuario eliminado exitosamente", null));
 	    } catch (Exception e) {

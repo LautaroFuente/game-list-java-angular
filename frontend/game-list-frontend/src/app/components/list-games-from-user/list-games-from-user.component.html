@@ -3,12 +3,16 @@
 <div class="game-container">
   <ul>
     @for (game of games; track game.id) {
-    <li class="game">{{ game.name }} | {{ game.genre }} | {{ game.releaseYear }} | {{ game.addedDate }} | {{ game.imageUrl }}</li>
+    <li class="game">
+      {{ game.name }} | {{ game.genre }} | {{ game.releaseYear }} | {{ game.addedDate }} | {{ game.imageUrl }}
+      <button class="delete-button" onclick="onDeleteGame(game.id)">Eliminar</button>
+    </li>
     } @empty {
     <li class="no-game">No hay Juegos.</li>
     }
   </ul>
 </div>
 <div class="menu">
-  <a routerLink="/login-menu" >Atras</a>
+  <a routerLink="/login-menu">Atrás</a>
 </div>
+

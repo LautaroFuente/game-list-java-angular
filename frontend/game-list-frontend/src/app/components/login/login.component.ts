@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy{
       this.authService.auth(email, password).pipe(takeUntil(this.unsubscribe$)).subscribe(
         (response) =>{
           console.log('Usuario guardado correctamente');
-          const { token, name, email } = response;
+          const { token, name, email } = response.data;
           this.userGlobal.login(name, email, token);
           this.router.navigate(['/login-menu']);
         },

@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class RegisterService {
 
-  private apiRegisterUrl = 'http://localhost:8080/user';
+  private apiRegisterUrl = 'http://localhost:8080/api/user';
 
   constructor(private http: HttpClient) { }
 
