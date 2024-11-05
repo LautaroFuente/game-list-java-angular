@@ -80,7 +80,7 @@ public class UserController {
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@DeleteMapping("user/delete/{email}")
-	public ResponseEntity<ApiResponseDTO<List<User>>> deleteUser(@PathVariable String email){
+	public ResponseEntity<ApiResponseDTO<User>> deleteUser(@PathVariable String email){
 		if(email == null || email == "") {
 			return ResponseEntity.badRequest().body(new ApiResponseDTO<>(false, "El email del usuario no puede ser nulo o vacio", null));
 		}

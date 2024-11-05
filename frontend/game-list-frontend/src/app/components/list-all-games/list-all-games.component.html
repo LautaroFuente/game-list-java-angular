@@ -3,7 +3,7 @@
 <div class="game-container">
   <ul>
     @for (game of games; track game.id) {
-    <li class="game">{{ game.name }} | {{ game.genre }} | {{ game.releaseYear }} | {{ game.addedDate }} | {{ game.imageUrl }}</li>
+    <li class="game">{{ game.name }} | {{ game.genre }} | {{ game.releaseYear }} | {{ game.addedDate }} | {{ game.imageUrl }} | {{game.user.name}}</li>
     } @empty {
     <li class="no-game">No hay Juegos.</li>
     }
