@@ -1,8 +1,10 @@
 const { app, BrowserWindow } = require('electron');
-const Store = require('electron-store');
 const { ipcMain } = require('electron');
 
-const store = new Store();
+(async () => {
+    const Store = (await import('electron-store')).default;
+    const store = new Store();
+
 
 const sizes = [
     { width: 800, height: 600 },
@@ -18,8 +20,9 @@ function createWindow(sizeIndex) {
         width: width,
         height: height,
         webPreferences: {
-            nodeIntegration: true,
-            //contextIsolation: false
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js')
         }
     });
 
@@ -54,3 +57,5 @@ ipcMain.on('get-data', (event, key) => {
 ipcMain.on('set-data', (event, key, value) => {
     store.set(key, value);
 });
+  })();
+  

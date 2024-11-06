@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ipcRenderer } from 'electron';
+//import { ipcRenderer } from 'electron';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,8 @@ export class AuthInterceptorService implements HttpInterceptor {
       });
       return next.handle(cloned);
     }
-
-    return new Observable(observer => {
+    return new Observable;
+    /*return new Observable(observer => {
       ipcRenderer.send('get-data', 'token');
 
       ipcRenderer.once('send-data', (event, token) => {
@@ -42,7 +42,7 @@ export class AuthInterceptorService implements HttpInterceptor {
           }
         );
       });
-    });
+    });*/
   }
 }
 

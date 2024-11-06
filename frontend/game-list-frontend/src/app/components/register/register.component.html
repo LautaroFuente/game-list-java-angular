@@ -16,6 +16,18 @@
     </div>
 
     <div class="form-row">
+      <label for="avatar">Selecciona un avatar:</label>
+      <div class="avatar-selection">
+        @for (avatar of avatars; track avatar ) {
+          <div class="avatar">
+            <input type="radio" name="avatar" [value]="avatar" formControlName="avatar">
+            <img [src]="avatar" alt="Avatar" class="avatar-img">
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="form-row">
       <button type="submit" [disabled]="formRegister.invalid">Registrar</button>
     </div>
 </form>

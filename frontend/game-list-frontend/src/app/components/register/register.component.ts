@@ -23,6 +23,14 @@ import { User } from '../../interfaces/User.interface';
 })
 export class RegisterComponent implements OnInit, OnDestroy{
 
+  avatars: string[] = [
+    'assets/images/avatar1.jpg',
+    'assets/images/avatar2.jpg',
+    'assets/images/avatar3.jpg',
+    'assets/images/avatar4.jpg'
+  ];
+  
+  selectedAvatar: string = this.avatars[0];
   formRegister!: FormGroup;
   name: string = '';
   email: string = '';
@@ -40,14 +48,15 @@ export class RegisterComponent implements OnInit, OnDestroy{
     this.formRegister = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      selectedAvatar: ['', Validators.required]
     });
   }
 
   onSubmit(): void {
     if(this.formRegister.valid){
-      const {name, email, password} = this.formRegister.value;
-      this.registerService.saveUser(name, email, password).pipe(takeUntil(this.unsubscribe$)).subscribe(
+      const {name, email, password, selectedAvatar} = this.formRegister.value;
+      this.registerService.saveUser(name, email, password, selectedAvatar).pipe(takeUntil(this.unsubscribe$)).subscribe(
         (response) =>{
           const ApiResponse: ApiResponseDTO<User> = response;
           console.log(ApiResponse.success, ApiResponse.message);

@@ -18,13 +18,15 @@ public class User {
 	private String email;
 	private String password;
 	private LocalDateTime registration_date;
+	private String image_url;
 	
-	public User(String name, String email, String password, LocalDateTime registration_date) {
+	public User(String name, String email, String password, LocalDateTime registration_date, String image_url) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.registration_date = registration_date;
+		this.image_url = image_url;
 	}
 
 	public User() {
@@ -66,6 +68,16 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getImage_url() {
+		return image_url;
+	}
+
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
+	}
+	
+	
 	
 	
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.game_list.game_list.DTO.ApiResponseDTO;
 import com.game_list.game_list.entities.Game;
+import com.game_list.game_list.service.GameImageService;
 import com.game_list.game_list.service.GameService;
 import com.game_list.game_list.service.UserService;
 
@@ -25,6 +26,9 @@ public class GameController {
 
 	@Autowired
 	private GameService gameService;
+	
+	@Autowired
+	private GameImageService gameImageService;
 	
 	@Autowired
 	private UserService userService;
@@ -81,6 +85,20 @@ public class GameController {
 		try {
 			Game existGame = this.gameService.getOneGameInUserList(game.getName(), email);
 			if( existGame == null) {
+				
+				String imageUrl = gameImageService.getImageUrl(game.getName());
+	            String imagePath;
+	            
+	            if (imageUrl != null) {
+
+	                imagePath = gameImageService.downloadImage(imageUrl, game.getName());
+	            } else {
+
+	                imagePath = gameImageService.saveDefaultImage();
+	            }
+
+	            game.setImg_url(imagePath);
+	            
 				this.gameService.addGameFromOneUser(game);
 				return ResponseEntity.ok(new ApiResponseDTO<>(true, "Juego guardado exitosamente", game));
 			}else {

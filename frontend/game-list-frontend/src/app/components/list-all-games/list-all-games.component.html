@@ -3,7 +3,8 @@
 <div class="game-container">
   <ul>
     @for (game of games; track game.id) {
-    <li class="game">{{ game.name }} | {{ game.genre }} | {{ game.releaseYear }} | {{ game.addedDate }} | {{ game.imageUrl }} | {{game.user.name}}</li>
+    <li class="game">{{ game.name }} | {{ game.genre }} | {{ game.releaseYear }} | {{ game.addedDate }} | <img [src]="game.imageUrl" alt="{{ game.name }}" /> |
+       {{game.user.name}} <img [src]="game.user.imgUrl" alt="Usuario avatar" /></li>
     } @empty {
     <li class="no-game">No hay Juegos.</li>
     }

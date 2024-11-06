@@ -11,8 +11,8 @@ export class RegisterService {
 
   constructor(private http: HttpClient) { }
 
-  saveUser(name: string, email: string, password: string): Observable<any> {
-    const data = { name, email, password};
+  saveUser(name: string, email: string, password: string, selectedAvatar: string): Observable<any> {
+    const data = { name, email, password, selectedAvatar};
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
