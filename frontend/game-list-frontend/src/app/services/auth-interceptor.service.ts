@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-//import { ipcRenderer } from 'electron';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +19,11 @@ export class AuthInterceptorService implements HttpInterceptor {
       });
       return next.handle(cloned);
     }
-    return new Observable;
-    /*return new Observable(observer => {
-      ipcRenderer.send('get-data', 'token');
+  
+    return new Observable(observer => {
+      window.electron.ipcRenderer.send('get-data', 'token');
 
-      ipcRenderer.once('send-data', (event, token) => {
+      window.electron.ipcRenderer.once('send-data', (event, token) => {
         this.token = token;
         const cloned = req.clone({
           headers: req.headers.set('Authorization', `Bearer ${this.token}`)
@@ -42,7 +41,7 @@ export class AuthInterceptorService implements HttpInterceptor {
           }
         );
       });
-    });*/
+    });
   }
 }
 

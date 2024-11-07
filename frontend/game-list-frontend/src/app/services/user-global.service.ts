@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-//import { ipcRenderer } from 'electron';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,17 +15,17 @@ export class UserGlobalService {
   constructor(private http: HttpClient) {}
 
   login(name: string, email: string, token: string ) {
-    //ipcRenderer.send('set-data', 'token', token);
     this.name = name;
     this.email = email;
     this.token = token;
+    window.electron.ipcRenderer.send('set-data', 'token', token);
   }
 
   logout() {
-    //ipcRenderer.send('set-data', 'token', null);
     this.name = "";
     this.email = "";
     this.token = "";
+    window.electron.ipcRenderer.send('set-data', 'token', null);
   }
 
   deleteAccount(): Observable<any> {

@@ -1,5 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 const { ipcMain } = require('electron');
+const path = require('path');
+
 
 (async () => {
     const Store = (await import('electron-store')).default;

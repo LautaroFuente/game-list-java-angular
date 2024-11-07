@@ -1,6 +1,6 @@
-const { ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 
-window.addEventListener('DOMContentLoaded', () => {
-
-  window.ipcRenderer = ipcRenderer;
+contextBridge.exposeInMainWorld('electron', {
+  ipcRenderer: ipcRenderer
 });
+
