@@ -59,5 +59,13 @@ ipcMain.on('get-data', (event, key) => {
 ipcMain.on('set-data', (event, key, value) => {
     store.set(key, value);
 });
+
+ipcMain.on('resize-window', (event, { width, height }) => {
+    const win = BrowserWindow.getFocusedWindow();
+    if (win) {
+      win.setSize(width, height);
+    }
+});
+  
   })();
   

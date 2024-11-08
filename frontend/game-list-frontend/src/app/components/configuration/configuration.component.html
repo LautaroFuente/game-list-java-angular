@@ -1,0 +1,8 @@
+<div>
+    <h2>Configuración de la ventana</h2>
+    <select (change)="onSizeSelect($event)">
+        @for (size of sizes; track size.index) {
+            <option >{{ size.label }}</option>
+        }
+    </select>
+</div>
