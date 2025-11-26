@@ -5,14 +5,38 @@
   "type": "commonjs",
   "scripts": {
     "start": "electron main.js",
+    "dist": "electron-builder",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "build": {
+    "appId": "com.gamelist.app",
+    "productName": "GameList",
+    "files": [
+      "main.js",
+      "preload.js"
+    ],
+    "npmRebuild": false,
+    "buildDependenciesFromSource": true,
+    "extraResources": [
+      {
+        "from": "backend/game-list-backend/",
+        "to": "backend",
+        "filter": [
+          "*.jar"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    }
   },
   "keywords": [],
   "author": "Lautaro Fuente",
   "license": "ISC",
   "description": "Game list",
   "devDependencies": {
-    "electron": "^33.0.2"
+    "electron": "^33.0.2",
+    "electron-builder": "^26.0.12"
   },
   "dependencies": {
     "electron-store": "^10.0.0"
